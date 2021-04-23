@@ -15,16 +15,16 @@ public class OthersView {
     static Scanner scan = new Scanner(System.in);
     static ProductService productService = new ProductService();
 
-    public static void createProductMenu(){
-        System.out.println("Create new product");
-        System.out.println("====================");
+    public static void createProduct(){
+        System.out.println("#### Create new product ####");
+        System.out.println("============================");
 
         System.out.println("Product name: ");
         String name = scan.nextLine();
 
         double price = ProductView.validPrice();
 
-        System.out.println("Description of the Product: ");
+        System.out.println("Description: ");
         String description = scan.nextLine();
 
         int quantity = ProductView.validQuantity();
@@ -36,7 +36,7 @@ public class OthersView {
 
         Product product = new Product(name, price, description,quantity, images);
         productService.save(product);
-        System.out.println("What is the Sub Collection");
+        System.out.println("What is the Sub Collection?");
         String subCollectionName = scan.nextLine();
         SubCollection subCollection = CollectionView.createSubCollectionMenu(subCollectionName);
         if(CollectionView.insertProductIntoAnExistingSubCollection(product,subCollection)){

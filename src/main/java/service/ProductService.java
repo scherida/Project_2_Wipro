@@ -2,7 +2,6 @@ package service;
 
 import model.Product;
 import repository.Repository;
-import view.images.ImagesMenu;
 import view.product.ProductView;
 
 import java.util.ArrayList;

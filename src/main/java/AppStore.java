@@ -30,13 +30,13 @@ public class AppStore {
                                         TShirtView.createTShirtMenu();
                                         break;
                                     case 2:
-                                        PantsView.createPantsMenu();
+                                        PantsView.createPants();
                                         break;
                                     case 3:
                                         SneakersView.createSneakersMenu();
                                         break;
                                     case 4:
-                                        OthersView.createProductMenu();
+                                        OthersView.createProduct();
                                         break;
                                     case 0:
                                         break;

@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class test23 {
+public class AppStore {
     @Test
     public void teste(){
 

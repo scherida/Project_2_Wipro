@@ -4,6 +4,7 @@ import model.Collection;
 import model.Product;
 import model.SubCollection;
 import service.CollectionService;
+import service.SubCollectionService;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -15,9 +16,11 @@ public class CollectionView {
     static Scanner scan = new Scanner(System.in);
     static CollectionService collectionService = new CollectionService();
 
+    static SubCollectionService subCollectionService = new SubCollectionService();
+
 
     public static SubCollection createSubCollectionMenu(String subCollectionName) {
-        SubCollection subCollection = collectionService.checkExistSubCollection(subCollectionName);
+        SubCollection subCollection = subCollectionService.checkExistSubCollection(subCollectionName);
         if(subCollection.getName() == null){
             do {
                 System.out.println("SubCollection Name:");
@@ -29,7 +32,7 @@ public class CollectionView {
                 boolean checkQnt;
                 do {
                     qnt = validQuantity();
-                    checkQnt = collectionService.validQntKeywords(qnt);
+                    checkQnt = subCollectionService.validQntKeywords(qnt);
                     if(!checkQnt){
                         System.err.println("Limit 6 keywords");
                     }
@@ -43,7 +46,7 @@ public class CollectionView {
                             System.err.println("Required");
                         }
                     } while (keyword.isEmpty());
-                    subCollectionKeywords = collectionService.getKeywords(i, keyword, subCollectionKeywords);
+                    subCollectionKeywords = subCollectionService.getKeywords(i, keyword, subCollectionKeywords);
                 }
                 subCollection = new SubCollection(subCollectionName,subCollectionDescription,subCollectionKeywords);
 
@@ -57,7 +60,7 @@ public class CollectionView {
                         collection = createCollectionMenu(collectionName);
                     }
                     if(subCollection.getName()!=null || subCollection.getDescription()!=null||subCollection.getKeywords()!=null){
-                        collectionService.saveSubCollection(collection,subCollection);
+                        subCollectionService.saveSubCollection(collection,subCollection);
                         System.out.println("SubCollection Created");
                     }else {
                         System.err.println("All fields are required");
@@ -86,7 +89,7 @@ public class CollectionView {
                 boolean checkQnt;
                 do {
                     qnt = validQuantity();
-                    checkQnt = collectionService.validQntKeywords(qnt);
+                    checkQnt = subCollectionService.validQntKeywords(qnt);
                     if (!checkQnt) {
                         System.err.println("Limit 6 keywords");
                     }
@@ -101,7 +104,7 @@ public class CollectionView {
                         }
                     } while (keyword.isEmpty());
 
-                    collectionKeywords = collectionService.getKeywords(i, keyword, collectionKeywords);
+                    collectionKeywords = subCollectionService.getKeywords(i, keyword, collectionKeywords);
                 }
                 collection.setKeywords(collectionKeywords);
                 if (collection.getName().isEmpty() || collection.getDescription().isEmpty()) {
@@ -145,7 +148,7 @@ public class CollectionView {
     public static void searchInSubCollection(){
         String subCollectionName = subCollectionName();
         String productName = productName();
-        if (collectionService.searchForAProductInASubCollection(subCollectionName,productName)){
+        if (subCollectionService.searchForAProductInASubCollection(subCollectionName,productName)){
             System.out.println(productName+" is in the "+subCollectionName);
         }else{
             System.err.println("Not Founded!");
@@ -153,7 +156,7 @@ public class CollectionView {
     }
 
     public static void listProductInASubCollection(){
-        List<Product> products = collectionService.listAllProductInASubCollection(subCollectionName());
+        List<Product> products = subCollectionService.listAllProductInASubCollection(subCollectionName());
         if (!products.isEmpty()){
             System.out.println(products);
         }else {
@@ -162,20 +165,19 @@ public class CollectionView {
     }
 
     public static void listCollectionsAndSubCollections() {
-        if (!collectionService.checkCollectionsIsEmpty()) {
+        if (!subCollectionService.checkCollectionsIsEmpty()) {
             System.out.println("All collections listed");
             System.out.println("======================");
             System.out.println();
-            collectionService.listCollectionsAndSubCollections();
+            subCollectionService.listCollectionsAndSubCollections();
         }else {
             System.err.println("Nothing Registered, Create a new collection.");
         }
     }
 
     public static boolean insertProductIntoAnExistingSubCollection(Product product, SubCollection subCollection) {
-        return collectionService.insertProductIntoAnExistingSubCollection(product,subCollection);
+        return subCollectionService.insertProductIntoAnExistingSubCollection(product,subCollection);
     }
-
 
     public static void subCollectionAlreadyExist() {
         System.err.println("SubCollection already exist.");
