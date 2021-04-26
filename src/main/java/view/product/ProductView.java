@@ -16,23 +16,16 @@ public class ProductView {
         return scan.nextLine();
     }
 
-    public static void productsIsEmpty(){
-        if(!productService.productsIsEmpty()){
-            System.err.println("Nothing Registered, Create a new product.");
-        }
-    }
-
     public static void listAllProducts() {
         System.out.println("All products listed");
-        System.out.println("======================");
-        boolean print = productService.listProducts(); //ok
+        boolean print = productService.listProducts();
         System.out.println();
         if (!print) {
             System.err.println("Nothing Registered, Create a new product.");
         }
     }
     public static void searchByName(){
-        List<Product> products = productService.searchByName(ProductView.productName());//ok
+        List<Product> products = productService.searchByName(ProductView.productName());
         if (!products.isEmpty()){
             for (Product product : products) {
                 System.out.println(

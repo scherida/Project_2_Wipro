@@ -15,9 +15,55 @@ import static view.product.ProductView.productName;
 public class CollectionView {
     static Scanner scan = new Scanner(System.in);
     static CollectionService collectionService = new CollectionService();
-
     static SubCollectionService subCollectionService = new SubCollectionService();
 
+    public static Collection createCollectionMenu(String collectionName){
+        Collection collection = collectionService.checkCollection(collectionName);
+        if(collection.getName()==null) {
+            do {
+                System.out.println("Product Collection: ");
+                System.out.println(collectionName);
+                collection.setName(collectionName);
+
+                System.out.println("Description: ");
+                collection.setDescription(scan.nextLine());
+
+                String[] collectionKeywords = new String[6];
+                int qnt;
+                boolean checkQnt;
+                do {
+                    qnt = validQuantity();
+                    checkQnt = subCollectionService.validQntKeywords(qnt);
+                    if (!checkQnt) {
+                        System.err.println("Limit 6 keywords");
+                    }
+                } while (!checkQnt);
+                for (int i = 0; i < qnt; i++) {
+                    String keyword;
+                    do {
+                        System.out.println("Keyword " + (i + 1));
+                        keyword = scan.nextLine();
+                        if (keyword.isEmpty()) {
+                            System.err.println("Required");
+                        }
+                    } while (keyword.isEmpty());
+
+                    collectionKeywords = subCollectionService.getKeywords(i, keyword, collectionKeywords);
+                }
+                collection.setKeywords(collectionKeywords);
+                if (collection.getName().isEmpty() || collection.getDescription().isEmpty()) {
+                    System.err.println("All fields are required");
+                } else {
+                    collectionService.save(collection);
+                    System.out.println("Collection Created");
+                }
+            } while (collection.getDescription().isEmpty());
+        }else{
+            System.err.println("Collection already exist.");
+        }
+
+        return collection;
+    }
 
     public static SubCollection createSubCollectionMenu(String subCollectionName) {
         SubCollection subCollection = subCollectionService.checkExistSubCollection(subCollectionName);
@@ -25,7 +71,7 @@ public class CollectionView {
             do {
                 System.out.println("SubCollection Name:");
                 System.out.println(subCollectionName);
-                System.out.println("SubCollection Description");
+                System.out.println("SubCollection Description:");
                 String subCollectionDescription = scan.nextLine();
                 String[] subCollectionKeywords = new String[6];
                 int qnt;
@@ -55,12 +101,12 @@ public class CollectionView {
                 }else{
                     System.out.println("Which collection does this sub collection belong?");
                     String collectionName = scan.nextLine();
-                    Collection collection = collectionService.checkExistCollection(collectionName);
+                    Collection collection = collectionService.checkCollection(collectionName);
                     if(collection.getName() == null){
                         collection = createCollectionMenu(collectionName);
                     }
                     if(subCollection.getName()!=null || subCollection.getDescription()!=null||subCollection.getKeywords()!=null){
-                        subCollectionService.saveSubCollection(collection,subCollection);
+                        subCollectionService.save(collection,subCollection);
                         System.out.println("SubCollection Created");
                     }else {
                         System.err.println("All fields are required");
@@ -68,57 +114,9 @@ public class CollectionView {
                 }
             }while (subCollection.getDescription().isEmpty());
         }else{
-            CollectionView.subCollectionAlreadyExist();
+            System.err.println("SubCollection already exist.");
         }
         return subCollection;
-    }
-
-    public static Collection createCollectionMenu(String collectionName){
-        Collection collection = collectionService.checkExistCollection(collectionName);
-        if(collection.getName()==null) {
-            do {
-                System.out.println("Product Collection: ");
-                System.out.println(collectionName);
-                collection.setName(collectionName);
-
-                System.out.println("Description of the Collection: ");
-                collection.setDescription(scan.nextLine());
-
-                String[] collectionKeywords = new String[6];
-                int qnt;
-                boolean checkQnt;
-                do {
-                    qnt = validQuantity();
-                    checkQnt = subCollectionService.validQntKeywords(qnt);
-                    if (!checkQnt) {
-                        System.err.println("Limit 6 keywords");
-                    }
-                } while (!checkQnt);
-                for (int i = 0; i < qnt; i++) {
-                    String keyword;
-                    do {
-                        System.out.println("Keyword " + (i + 1));
-                        keyword = scan.nextLine();
-                        if (keyword.isEmpty()) {
-                            System.err.println("Required");
-                        }
-                    } while (keyword.isEmpty());
-
-                    collectionKeywords = subCollectionService.getKeywords(i, keyword, collectionKeywords);
-                }
-                collection.setKeywords(collectionKeywords);
-                if (collection.getName().isEmpty() || collection.getDescription().isEmpty()) {
-                    System.err.println("All fields are required");
-                } else {
-                    collectionService.saveCollection(collection);
-                    System.out.println("Collection Created");
-                }
-            } while (collection.getDescription().isEmpty());
-        }else{
-            CollectionView.collectionAlreadyExist();
-        }
-
-        return collection;
     }
 
     public static String subCollectionName(){
@@ -148,7 +146,7 @@ public class CollectionView {
     public static void searchInSubCollection(){
         String subCollectionName = subCollectionName();
         String productName = productName();
-        if (subCollectionService.searchForAProductInASubCollection(subCollectionName,productName)){
+        if (subCollectionService.searchSubCollection(subCollectionName,productName)){
             System.out.println(productName+" is in the "+subCollectionName);
         }else{
             System.err.println("Not Founded!");
@@ -166,8 +164,6 @@ public class CollectionView {
 
     public static void listCollectionsAndSubCollections() {
         if (!subCollectionService.checkCollectionsIsEmpty()) {
-            System.out.println("All collections listed");
-            System.out.println("======================");
             System.out.println();
             subCollectionService.listCollectionsAndSubCollections();
         }else {
@@ -176,15 +172,7 @@ public class CollectionView {
     }
 
     public static boolean insertProductIntoAnExistingSubCollection(Product product, SubCollection subCollection) {
-        return subCollectionService.insertProductIntoAnExistingSubCollection(product,subCollection);
-    }
-
-    public static void subCollectionAlreadyExist() {
-        System.err.println("SubCollection already exist.");
-    }
-
-    public static void collectionAlreadyExist() {
-        System.err.println("Collection already exist.");
+        return subCollectionService.insertSubCollection(product,subCollection);
     }
 
     public static int validQuantity() {

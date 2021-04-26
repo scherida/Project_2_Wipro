@@ -44,9 +44,4 @@ public class ImagesMenu {
         }
         return imagesList;
     }
-
-    public static void limitImages(){
-        System.err.println("You can insert only 5 images!");
-    }
-
 }

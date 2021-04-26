@@ -29,7 +29,7 @@ public class TShirtView {
 
         double price = ProductView.validPrice();
 
-        System.out.println("Description of the Product: ");
+        System.out.println("Description: ");
         String description = scan.nextLine();
 
         int quantity = ProductView.validQuantity();

@@ -6,15 +6,13 @@ import java.util.HashMap;
 
 public class CollectionService implements Repository {
 
-    private ProductService productService = new ProductService();
-
     //Save Collections
-    public void saveCollection(Collection collection){
+    public void save(Collection collection){
         collections.put(collection, new HashMap<>());
     }
 
     //Exist Collection
-    public Collection checkExistCollection(String collectionName) {
+    public Collection checkCollection(String collectionName) {
         Collection collection = new Collection();
         if (!collections.isEmpty()) {
             for (Collection key: collections.keySet()){

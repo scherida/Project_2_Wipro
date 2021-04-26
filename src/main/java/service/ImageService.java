@@ -9,7 +9,7 @@ public class ImageService {
         if (qnt < 6) {
             result = true;
         }else{
-            ImagesMenu.limitImages();
+            System.err.println("You can insert only 5 images!");
         }
         return result;
     }

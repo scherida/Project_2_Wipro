@@ -2,25 +2,22 @@ package service;
 
 import model.Product;
 import repository.Repository;
-import view.product.ProductView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService implements Repository{
 
+    static ProductService productService = new ProductService();
+
+    public void save(Product product) {
+        products.add(product);
+    }
+
     public boolean listProducts() {
         boolean result = false;
         if (products.size() > 0) {
             products.forEach(System.out::println);
-            result = true;
-        }
-        return result;
-    }
-
-    public boolean productsIsEmpty(){
-        boolean result = false;
-        if(products.size() > 0){
             result = true;
         }
         return result;
@@ -35,9 +32,19 @@ public class ProductService implements Repository{
                 }
             }
         } else {
-            ProductView.productsIsEmpty();
+            if(!productService.productsIsEmpty()){
+                System.err.println("Nothing Registered, Create a new product.");
+            }
         }
         return productsByName;
+    }
+
+    public boolean productsIsEmpty(){
+        boolean result = false;
+        if(products.size() > 0){
+            result = true;
+        }
+        return result;
     }
 
     public Product checkExistProduct(String productName){
@@ -52,9 +59,5 @@ public class ProductService implements Repository{
             System.err.println("Nothing Registered, Create a new Product.");
         }
         return product;
-    }
-
-    public void save(Product product) {
-        products.add(product);
     }
 }

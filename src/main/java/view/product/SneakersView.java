@@ -56,7 +56,7 @@ public class SneakersView {
             System.out.println("Product Created");
             System.out.println(product);
         }else{
-            System.err.println("Error to create the product");
+            System.err.println("Error to create the product!");
         }
     }
 

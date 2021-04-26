@@ -13,12 +13,12 @@ public class SubCollectionService implements Repository {
     private ProductService productService = new ProductService();
 
     //Save SubCollections
-    public void saveSubCollection(Collection collection, SubCollection subCollection){
+    public void save(Collection collection, SubCollection subCollection){
         collections.get(collection).put(subCollection,new ArrayList<>());
     }
 
     //Insert SubCollections
-    public boolean insertProductIntoAnExistingSubCollection(Product product, SubCollection subCollection){
+    public boolean insertSubCollection(Product product, SubCollection subCollection){
         boolean result = false;
         Collection collection = getCollectionBySubCollection(subCollection);
         if (subCollection.getName()!= null && product.getName()!=null && collection.getName()!=null){
@@ -28,13 +28,13 @@ public class SubCollectionService implements Repository {
         return result;
     }
 
-    //List SubCollections
+    //List
     public void listCollectionsAndSubCollections() {
         collections.forEach((key, value) -> System.out.println(key + " " + value));
     }
 
     //Search SubCollections
-    public boolean searchForAProductInASubCollection(String subCollectionName, String productName) {
+    public boolean searchSubCollection(String subCollectionName, String productName) {
         boolean result = false;
         SubCollection subCollection = checkExistSubCollection(subCollectionName);
         Collection collection = getCollectionBySubCollection(subCollection);

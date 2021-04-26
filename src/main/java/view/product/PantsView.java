@@ -44,7 +44,7 @@ public class PantsView {
         }while (!allComplete);
 
         Product product = new Product(name, price, description,quantity,variantPants, images);
-        productService.save(product); //ok
+        productService.save(product);
 
         System.out.println("What is the Sub Collection?");
         String subCollectionName = scan.nextLine();
