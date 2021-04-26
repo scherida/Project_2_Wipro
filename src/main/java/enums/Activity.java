@@ -15,4 +15,10 @@ public enum Activity {
         return activity;
     }
 
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activity='" + activity + '\'' +
+                '}';
+    }
 }

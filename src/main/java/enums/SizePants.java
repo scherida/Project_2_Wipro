@@ -14,4 +14,11 @@ public enum SizePants {
     public String getSize(){
         return size;
     }
+
+    @Override
+    public String toString() {
+        return "SizePants{" +
+                "size='" + size + '\'' +
+                '}';
+    }
 }

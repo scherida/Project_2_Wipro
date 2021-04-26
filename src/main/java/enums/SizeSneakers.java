@@ -16,4 +16,11 @@ public enum SizeSneakers {
     public String getSize(){
         return size;
     }
+
+    @Override
+    public String toString() {
+        return "SizeSneakers{" +
+                "size='" + size + '\'' +
+                '}';
+    }
 }

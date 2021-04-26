@@ -15,4 +15,11 @@ public enum Sleeve {
     public String getSleeveType(){
         return sleeveType;
     }
+
+    @Override
+    public String toString() {
+        return "Sleeve{" +
+                "sleeveType='" + sleeveType + '\'' +
+                '}';
+    }
 }

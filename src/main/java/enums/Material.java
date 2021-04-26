@@ -17,4 +17,11 @@ public enum Material {
     public String getMaterial() {
         return material;
     }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "material='" + material + '\'' +
+                '}';
+    }
 }

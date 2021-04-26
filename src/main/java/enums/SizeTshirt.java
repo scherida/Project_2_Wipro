@@ -18,4 +18,10 @@ public enum SizeTshirt {
         return size;
     }
 
+    @Override
+    public String toString() {
+        return "SizeTShirt{" +
+                "size='" + size + '\'' +
+                '}';
+    }
 }
