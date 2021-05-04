@@ -143,12 +143,12 @@ public class CollectionView {
         return collectionName;
     }
 
-    public static void searchInSubCollection(){
+    public static void searchInSubCollection() {
         String subCollectionName = subCollectionName();
         String productName = productName();
-        if (subCollectionService.searchSubCollection(subCollectionName,productName)){
-            System.out.println(productName+" is in the "+subCollectionName);
-        }else{
+        if (subCollectionService.searchSubCollection(subCollectionName, productName)) {
+            System.out.println(productName + " is in the " + subCollectionName);
+        } else {
             System.err.println("Not Founded!");
         }
     }

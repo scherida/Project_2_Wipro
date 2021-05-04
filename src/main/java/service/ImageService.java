@@ -1,7 +1,5 @@
 package service;
 
-import view.images.ImagesMenu;
-
 public class ImageService {
 
     public boolean validQntImages(int qnt) {

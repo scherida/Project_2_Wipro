@@ -56,14 +56,4 @@ public class CollectionAndSubCollectionTest {
 
         Assert.assertNull(product);
     }
-
-    @Test
-    public void checkCollectionTest(){
-        collectionService.save(collection);
-        Collection collection1 = collectionService.checkCollection("name");
-        Collection collection2 = collectionService.checkCollection("others...");
-
-        Assert.assertEquals(collection,collection1);
-        Assert.assertEquals(new Collection(),collection2);
-    }
 }
